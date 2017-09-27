@@ -11,9 +11,17 @@ const PostsController = {
     return router;
   },
   index(req, res) {
-    models.Posts.findAll()
+    // Sorts by id in decreasing order
+    // so that the most recent post is displayed at the top
+    // models.Posts.findAll({order: [['id', 'DESC']]})
+
+    // Sorts by createdAt in descending order
+    models.Posts.findAll({order: [['createdAt', 'DESC']]})
       .then((posts) => {
-        res.render('posts', { posts });
+         res.render('posts', { posts });
+
+        // Display info as JSON so the data can be consumed by React via endpoints
+        //res.json(posts);
       });
   },
   create(req, res) {
